@@ -1,4 +1,4 @@
-# qtw_smu
+# Repository: qtw_smu
 Quantifying the World Code for SMU's MSDS Program
 
 ## Folders for each bi-weekly case study include:
