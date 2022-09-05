@@ -14595,11 +14595,11 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Case-Study-1:-Predicting-Critical-Temperature">Case Study 1: Predicting Critical Temperature<a class="anchor-link" href="#Case-Study-1:-Predicting-Critical-Temperature">&#182;</a></h1><p>By: Allen Hoskins</p>
 <hr />
-<h1 id="1.-Introduction">1. Introduction<a class="anchor-link" href="#1.-Introduction">&#182;</a></h1><p>Superconductiors are materials that conduct electricity wiht little or no resistance without onset or buildup of heat. Due to this process,superconductors can create a magnetic field and generate constant flow of electricity. These matericals have a property called <code>critical temperature</code>. This properity is the temperature at which this materical acts as a superconductor. While most matericals have an extremly low critical temperatures (between 0 and 10 Kelvin), research has been ongoing to find matericals with higher critical temperatures.</p>
+<h1 id="1.-Introduction">1. Introduction<a class="anchor-link" href="#1.-Introduction">&#182;</a></h1><p>Superconductors are materials that conduct electricity with little or no resistance without onset or buildup of heat. Due to this process, superconductors can create a magnetic field and generate a constant flow of electricity. These materials have a property called <code>critical temperature</code>. This property is the temperature at which this material acts as a superconductor. While most materials have an extremely low critical temperature (between 0 and 10 Kelvin), research has been ongoing to find materials with higher critical temperatures.</p>
 <p>In this case study, we will utilize Linear Regression with both L1 and L2 regularization to predict the critical temperature of a compound to potentially identify superconductors.</p>
 <hr />
-<h1 id="2.-METHODS">2. METHODS<a class="anchor-link" href="#2.-METHODS">&#182;</a></h1><h3 id="DATA-PREPROCESSING">DATA PREPROCESSING<a class="anchor-link" href="#DATA-PREPROCESSING">&#182;</a></h3><p>The origianl data is composed of two separate CSV files, named <code>train.csv</code> and <code>unique_m.csv</code>. Once importing needed packages for the case study, I read in the data and determined shape and size of both datasets. The <code>train.csv</code> dataset consisted of 21,263 rows with 82 columns and the <code>unique_m.csv</code> dataset consisted of 21,263 rows with 88 columns. The two datasets were then able to be merged on the index and the duplicate response variable of <code>critical_temp</code> was able to be dropped resuling in a final dataframe consisting of 21,263 rows with 168 columns. Before proceeding to Exploratory Data Analyis (EDA), I checked variable datatypes to determine if any other preprocessing needed to be done. With every datatype consisting of a float or integer, I was able to move to EDA.</p>
-<h3 id="EXPLORATORY-DATA-ANALYSIS-(EDA)">EXPLORATORY DATA ANALYSIS (EDA)<a class="anchor-link" href="#EXPLORATORY-DATA-ANALYSIS-(EDA)">&#182;</a></h3><p>With little information about the 168 explanitory variables and response variable within the data set, I needed to determine if the data needed to be scaled. I first plotted a histogram of the response variable to see the distribution (fig. 1). The histogram showed that the <code>critical_temp</code> was heavily right skewed. To determine if any of the data was heavily skewed, I ran quick descriptive statitics and plotted historgrams of the following explanitory variables: <code>number_of_elements</code>, <code>entropy_atomic_mass</code>, <code>wtd_mean_atomic_mass</code>, <code>critical_temp</code>. All of which appeared to have a large variance and non-standard distributions (fig 2).</p>
+<h1 id="2.-METHODS">2. METHODS<a class="anchor-link" href="#2.-METHODS">&#182;</a></h1><h3 id="DATA-PREPROCESSING">DATA PREPROCESSING<a class="anchor-link" href="#DATA-PREPROCESSING">&#182;</a></h3><p>The original data is composed of two separate CSV files, named <code>train.csv</code> and <code>unique_m.csv</code>. Once importing the needed packages for the case study, I read in the data and determined the shape and size of both datasets. The <code>train.csv</code> dataset consisted of 21,263 rows with 82 columns, and the <code>unique_m.csv</code> dataset consisted of 21,263 rows with 88 columns. The two datasets were then able to be merged on the index, and the duplicate response variable of <code>critical_temp</code> was able to be dropped, resulting in a final dataframe consisting of 21,263 rows with 168 columns. Before proceeding to Exploratory Data Analysis (EDA), I checked variable datatypes to determine if any other preprocessing needed to be done. With every datatype consisting of a float or integer, I was able to move on to EDA.</p>
+<h3 id="EXPLORATORY-DATA-ANALYSIS-(EDA)">EXPLORATORY DATA ANALYSIS (EDA)<a class="anchor-link" href="#EXPLORATORY-DATA-ANALYSIS-(EDA)">&#182;</a></h3><p>With little information about the 168 explanatory variables and response variable within the data set, I needed to determine if the data needed to be scaled. I first plotted a histogram of the response variable to see the distribution (Fig. 1). The histogram showed that the <code>critical_temp</code> was heavily right skewed. To determine if any other variables in the data were heavily skewed, I ran quick descriptive statistics and plotted histograms of the following explanatory variables: <code>number_of_elements</code>, <code>entropy_atomic_mass</code>, <code>wtd_mean_atomic_mass</code>, <code>critical_temp</code>. All of these variables appeared to have a large variances and non-standard distributions (Fig 2).</p>
 <figure>
   <figcaption>Fig. 1</figcaption>
   <img
@@ -14610,26 +14610,26 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   <img
   src="./superconduct/variable_hist.png">
 </figure>
-<h3 id="PREP-DATA-TO-MODEL">PREP DATA TO MODEL<a class="anchor-link" href="#PREP-DATA-TO-MODEL">&#182;</a></h3><p>Before scaling any of the explanatory variables, the data we separated out into explanatory variables (X) and response (y). Once separated, I was able to scale the data. Sklearn provides multiple scalers to transform the data, but only <code>StandardScaler</code> and <code>PowerTransformer</code> were considered a this time. According to Sklearn's website the definition of the scalers are such:</p>
+<h3 id="PREP-DATA-TO-MODEL">PREP DATA TO MODEL<a class="anchor-link" href="#PREP-DATA-TO-MODEL">&#182;</a></h3><p>Before scaling any of the explanatory variables, the data was separated into explanatory variables (X) and response variable (y). Once separated, I was able to scale the data. Sklearn provides multiple scalers to transform the data, but only <code>StandardScaler</code> and <code>PowerTransformer</code> were considered at this time. According to Sklearn's website, the definitions of the scalers are as follows:</p>
 <blockquote>
 <p>StandardScaler: Standardize features by removing the mean and scaling to unit variance.
-PowerTransformer: Apply a power transform featurewise to make data more Gaussian-like. Power transforms are a family of parametric, monotonic transformations that are applied to make data more Gaussian-like. This is useful for modeling issues related to heteroscedasticity (non-constant variance), or other situations where normality is desired. Supports Yeo-Johnson and Box-Cox.</p>
+PowerTransformer: Apply a power transform feature wise to make data more Gaussian-like. Power transforms are a family of parametric, monotonic transformations that are applied to make data more Gaussian-like. This is useful for modeling issues related to heteroscedasticity (non-constant variance), or other situations where normality is desired. Supports Yeo-Johnson and Box-Cox.</p>
 </blockquote>
-<p>Both StandardScaler and PowerTransformer were run though the ElasticNet model and since PowerTransformer produced the lowest mean RMSE, this will be the data set used moving forward. Note that since there are positive and negative integers in the data set, Yeo-Johnson was used instead of Box-Cox. Figure 3 contains histograms of variables in fig. 2 after utilizing <code>PowerTransforer</code>.</p>
+<p>Both StandardScaler and PowerTransformer were run though the ElasticNet model, and since PowerTransformer produced the lowest mean RMSE, this will be the data set used moving forward. Note that since there are positive and negative integers in the data set, Yeo-Johnson was used instead of Box-Cox. Fig. 3 contains histograms of variables in Fig. 2 after utilizing <code>PowerTransformer</code>.</p>
 <figure>
   <figcaption>Fig. 3</figcaption>
   <img
   src="./superconduct/variable_hist_post_powertransformer.png">
 </figure>
 <hr />
-<h1 id="3.-RESULTS">3. RESULTS<a class="anchor-link" href="#3.-RESULTS">&#182;</a></h1><p>For modeling, I determind that using Sklearn's <code>ElasticNetCV</code> model was appropriate as it combines the <code>l1</code> and <code>l2</code> regularization of <code>Lasso</code> and <code>Ridge</code> models.</p>
+<h1 id="3.-RESULTS">3. RESULTS<a class="anchor-link" href="#3.-RESULTS">&#182;</a></h1><p>For modeling, I determined that using Sklearn's <code>ElasticNetCV</code> model was appropriate as it combines the <code>l1</code> and <code>l2</code> regularization of <code>Lasso</code> and <code>Ridge</code> models.</p>
 <p><em>Models use: 10-fold Cross validation (<code>Kfold</code>), <code>random_seed = 0</code>, and <code>max_iter = 20000</code>.</em></p>
 <p><strong>Model GridSearchCV:</strong></p>
 <p>After preprocessing, EDA, and scaling the data, modeling was able to begin. Utilizing the power of Sklearn's <code>GridSearchCV</code>, the hyperparameters of <code>l1_ratio</code>, <code>tol</code>, and <code>eps</code> were run though the model and the best output using the <code>neg_root_mean_squared_error</code> scoring were output to be used in the final model.</p>
 <p><strong>Grid Search Parameters:</strong></p>
-<pre><code>      &quot;l1_ratio&quot;: np.arange(0.0,1.0,0.1), 
-      &quot;tol&quot;:      [1e-9,1e-8,1e-7,1e-6,1e-5, 1e-4, 1e-3, 1e-2, 1e-1],
-      &quot;eps&quot;:      [1e-3, 1e-2, 1e-1,1,10,100]
+<pre><code>      &quot;l1_ratio&quot;: np.arange(0.0, 1.0, 0.1), 
+      &quot;tol&quot;:      [1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1],
+      &quot;eps&quot;:      [1e-3, 1e-2, 1e-1, 1, 10, 100]
 </code></pre>
 <p><strong>Best Model Output:</strong></p>
 <pre><code>      &quot;l1_ratio&quot;: 0.2
@@ -14652,7 +14652,7 @@ PowerTransformer: Apply a power transform featurewise to make data more Gaussian
 | 9    |    2.11754 |   0.00175214 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.6208 |      16.4005 |
 | mean |    2.11005 |   0.00158665 |                                                                      |     16.4637 |      16.4121 |</p>
 <p><strong>Feature Importance:</strong></p>
-<p>After completeing the ElasticNetCV modeling, I wanted to determine which features were the most important in predicting <code>critical_temp</code>.</p>
+<p>After completing the ElasticNetCV modeling, I wanted to determine which features were the most important in predicting <code>critical_temp</code>.</p>
 <p>The top 10 features in the model were:</p>
 <p>|     | Feature                      |   Coefficient |
 |:---:|:-----------------------------|--------------:|
@@ -14667,7 +14667,7 @@ PowerTransformer: Apply a power transform featurewise to make data more Gaussian
 |  31 | Hg                           |       2.2417  |
 | 146 | wtd_mean_ThermalConductivity |       1.89972 |</p>
 <hr />
-<h1 id="4.-CONCLUSION">4. CONCLUSION<a class="anchor-link" href="#4.-CONCLUSION">&#182;</a></h1><p>In conclusion, the best model that was chosen used a combination of L1 and L2 regularization (<code>l1_ratio = 0.2</code>). This model produced an mean RMSE of 16.4637. While not all models are useful, the output of this model can be used as a base in determining superconductors.</p>
+<h1 id="4.-CONCLUSION">4. CONCLUSION<a class="anchor-link" href="#4.-CONCLUSION">&#182;</a></h1><p>In conclusion, the best model that was chosen used a combination of L1 and L2 regularization (<code>l1_ratio = 0.2</code>). This model produced a mean RMSE of 16.4637. While not all models are useful, the output of this model can be used as a base in determining superconductors.</p>
 <hr />
 <h1 id="Start-Code:">Start Code:<a class="anchor-link" href="#Start-Code:">&#182;</a></h1>
 </div>
