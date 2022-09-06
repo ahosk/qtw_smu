@@ -14652,34 +14652,164 @@ PowerTransformer: Apply a power transform feature wise to make data more Gaussia
 </code></pre>
 <p><strong>ElasticNetCV with GridSearchCV Tuned Parameters:</strong></p>
 <p>After performing GridSearchCV to tune the model parameters, Sklearn's <code>cross_validate</code> was used to validate the model and determine final performance. The results of all 10 folds are below with a mean RMSE of 16.4637.</p>
-<p>|      |   fit_time |   score_time | estimator                                                            |  test_score |  train_score |
-|:----:|-----------:|-------------:|:---------------------------------------------------------------------|------------:|-------------:|
-| 0    |    2.19916 |   0.00117993 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.7378 |      16.3605 |
-| 1    |    2.15888 |   0.00172806 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.7811 |      16.3389 |
-| 2    |    2.09171 |   0.00159836 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.2488 |      16.4508 |
-| 3    |    2.13909 |   0.00134301 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.4203 |      16.4222 |
-| 4    |    2.04526 |   0.00174427 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.5608 |      16.4041 |
-| 5    |    2.05884 |   0.00163698 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     15.7617 |      16.4887 |
-| 6    |    2.1159  |   0.00138688 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.2624 |      16.446  |
-| 7    |    2.06758 |   0.00157595 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.7527 |      16.397  |
-| 8    |    2.10658 |   0.00192094 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.4909 |      16.4127 |
-| 9    |    2.11754 |   0.00175214 | ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01) |     16.6208 |      16.4005 |
-| MEAN |    2.11005 |   0.00158665 |                                                                      |     16.4637 |      16.4121 |</p>
+<table>
+    <tr>
+        <td></td>
+        <td>fit_time</td>
+        <td>score_time</td>
+        <td>estimator</td>
+        <td>test_score</td>
+        <td>train_score</td>
+    </tr>
+    <tr>
+        <td>0</td>
+        <td>2.19916</td>
+        <td>0.00117993</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.7378</td>
+        <td>16.3605</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>2.15888</td>
+        <td>0.00172806</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.7811</td>
+        <td>16.3389</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>2.09171</td>
+        <td>0.00159836</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.2488</td>
+        <td>16.4508</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>2.13909</td>
+        <td>0.00134301</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.4203</td>
+        <td>16.4222</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>2.04526</td>
+        <td>0.00174427</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.5608</td>
+        <td>16.4041</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>2.05884</td>
+        <td>0.00163698</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>15.7617</td>
+        <td>16.4887</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>2.1159</td>
+        <td>0.00138688</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.2624</td>
+        <td>16.446</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>2.06758</td>
+        <td>0.00157595</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.7527</td>
+        <td>16.397</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>2.10658</td>
+        <td>0.00192094</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.4909</td>
+        <td>16.4127</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>2.11754</td>
+        <td>0.00175214</td>
+        <td>ElasticNetCV(l1_ratio=0.2, max_iter=10000, random_state=0, tol=0.01)</td>
+        <td>16.6208</td>
+        <td>16.4005</td>
+    </tr>
+    <tr>
+        <td>MEAN</td>
+        <td>2.11005</td>
+        <td>0.00158665</td>
+        <td></td>
+        <td>16.4637</td>
+        <td>16.4121</td>
+    </tr>
+</table>
 <p><strong>Feature Importance:</strong></p>
 <p>After completing the ElasticNetCV modeling, I wanted to determine which features were the most important in predicting <code>critical_temp</code>.</p>
 <p>The top 10 features in the model were:</p>
-<p>|     | Feature                      |   Coefficient |
-|:---:|:-----------------------------|--------------:|
-|  19 | Cu                           |       4.99197 |
-|   7 | Ba                           |       4.88638 |
-|  12 | Ca                           |       4.83552 |
-|  38 | La                           |      -3.48937 |
-| 163 | wtd_std_Valence              |      -3.24568 |
-|   9 | Bi                           |       2.40671 |
-| 162 | wtd_std_ThermalConductivity  |       2.29054 |
-|  57 | Pr                           |      -2.27065 |
-|  31 | Hg                           |       2.2417  |
-| 146 | wtd_mean_ThermalConductivity |       1.89972 |</p>
+<table>
+    <tr>
+        <td></td>
+        <td>Feature</td>
+        <td>Coefficient</td>
+    </tr>
+    <tr>
+        <td>19</td>
+        <td>Cu</td>
+        <td>4.99197</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Ba</td>
+        <td>4.88638</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Ca</td>
+        <td>4.83552</td>
+    </tr>
+    <tr>
+        <td>38</td>
+        <td>La</td>
+        <td>-3.48937</td>
+    </tr>
+    <tr>
+        <td>163</td>
+        <td>wtd_std_Valence</td>
+        <td>-3.24568</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>Bi</td>
+        <td>2.40671</td>
+    </tr>
+    <tr>
+        <td>162</td>
+        <td>wtd_std_ThermalConductivity</td>
+        <td>2.29054</td>
+    </tr>
+    <tr>
+        <td>57</td>
+        <td>Pr</td>
+        <td>-2.27065</td>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Hg</td>
+        <td>2.2417</td>
+    </tr>
+    <tr>
+        <td>146</td>
+        <td>wtd_mean_ThermalConductivity</td>
+        <td>1.89972</td>
+    </tr>
+</table>
 <hr />
 <h1 id="CONCLUSION">CONCLUSION<a class="anchor-link" href="#CONCLUSION">&#182;</a></h1><p>In conclusion, the best model that was chosen used a combination of L1 and L2 regularization (<code>l1_ratio = 0.2</code>). This model produced a mean RMSE of 16.4637. While not all models are useful, the output of this model can be used as a base in determining superconductors.</p>
 <hr />
