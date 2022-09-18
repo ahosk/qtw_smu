@@ -14599,7 +14599,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <h1 id="1.-INTRODUCTION">1. INTRODUCTION<a class="anchor-link" href="#1.-INTRODUCTION">&#182;</a></h1><p>Diabetes is a metabolic disease impacting 37.3 million Americans. Those affected by the disease have complications producing insulin, a chemical messenger that our body uses to store energy. Although it is uncommon, diabetics can be hospitalized for having critically low or high blood glucose levels. These hospitalizations can be life threatening and should be minimized at all costs.</p>
 <p>In this case study, we will use a diabetes data set procured by Dr. Slater, to identify what factors most significantly result in diabetics getting readmitted to hospitals. To accomplish this, we will build a Logistic Regression model and extract its respective feature importances. It is our hope that this research can be leveraged by medical professionals to help treat hospitalized diabetics and to ensure that these patients are not readmitted in the future.</p>
 <hr />
-<h1 id="2.-METHODS">2. METHODS<a class="anchor-link" href="#2.-METHODS">&#182;</a></h1><h4 id="DATA-UNDERSTANDING:">DATA UNDERSTANDING:<a class="anchor-link" href="#DATA-UNDERSTANDING:">&#182;</a></h4><p>Data used in this case study was a diabetes.csv provided by Dr. Slater. Our diabetes.csv contained data related to hospitalized diabetic patients including columns such as: “readmitted,” “patient_nbr,” “insulin,” and “time_in_hospital.” Upon reviewing the contents of our data set, we saved the data into a data frame named “diabetes_data” and began pre-processing.</p>
+<h1 id="2.-METHODS">2. METHODS<a class="anchor-link" href="#2.-METHODS">&#182;</a></h1><h4 id="DATA-UNDERSTANDING:">DATA UNDERSTANDING:<a class="anchor-link" href="#DATA-UNDERSTANDING:">&#182;</a></h4><p>Data used in this case study was a diabetes.csv provided by Dr. Slater. Our diabetes.csv contained data related to hospitalized diabetic patients including columns such as: <code>readmitted</code>, <code>patient_nbr</code>, <code>insulin</code>, and <code>time_in_hospital</code>, Upon reviewing the contents of our data set, we saved the data into a data frame named “diabetes_data” and began pre-processing.</p>
 <h4 id="DATA-PREPROCESSING:">DATA PREPROCESSING:<a class="anchor-link" href="#DATA-PREPROCESSING:">&#182;</a></h4><p>The first step we performed in pre-processing was reviewing our full data set. Immediately, we recognized that missing values existed in the columns of:</p>
 <ol>
 <li>race</li>
@@ -14610,8 +14610,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <li>diag_2</li>
 <li>diag_3</li>
 </ol>
-<p>Given that machine learning models do not handle missing values well, we imputed them using appropriate statistical methods. Full details on how these columns were imputed can be found in the sub-header of this case study titled, “Data Imputation.”
-After identifying that missing values existed in our data set, we ran the command, “diabetes_data.info()” and noted the following details of our data frame:</p>
+<p>Given that machine learning models do not handle missing values well, we imputed them using appropriate statistical methods. Full details on how these columns were imputed can be found in the sub-header of this case study titled, “Data Imputation.&quot;</p>
+<p>After identifying that missing values existed in our data set, we ran the command, <code>diabetes_data.info()</code> and noted the following details of our data frame:</p>
 <blockquote>
 <p>Our data frame contained 101,766 rows.
    Our data frame contained 50 columns. 
@@ -14619,19 +14619,20 @@ After identifying that missing values existed in our data set, we ran the comman
    Our data frame contained 13 numeric columns. 
    Our data frame contained 37 categorical columns.</p>
 </blockquote>
-<p>From this output we recognized that one hot encoding (OHE), would need to be performed on our categorical columns. For additional details on our OHE process, please see the sub-header of this case study titled, “One Hot Encoding.”</p>
-<p>The next step performed in pre-processing was running the command “diabetes_data.describe() to view the summary statistics of our data frame. Output from this command showed that several columns contained outliers. This was something we remained cognizant of throughout our analysis. 
-Finally, to view the distributions of our categorical columns with missing values, we created count plots. Visualizing these columns was important, as it helped us determine what data imputation method was most appropriate for our data. Output from our count plots showed that all seven of our columns with missing data contained non-normal distributions (Exhibit 1.0). Since all seven columns were of the categorical data type, we noted that imputing these columns with either the mean or median value would be appropriate.</p>
-<p><br><figure>
+<p>From this output we recognized that one hot encoding (OHE), would need to be performed on our categorical columns. For additional details on our OHE process, please see the sub-header of this case study titled, <code>One Hot Encoding.</code></p>
+<p>The next step performed in pre-processing was running the command <code>diabetes_data.describe()</code> to view the summary statistics of our data frame. Output from this command showed that several columns contained outliers. This was something we remained cognizant of throughout our analysis.</p>
+<p>Finally, to view the distributions of our categorical columns with missing values, we created count plots. Visualizing these columns was important, as it helped us determine what data imputation method was most appropriate for our data. Output from our count plots showed that all seven of our columns with missing data contained non-normal distributions (Exhibit 1.0). Since all seven columns were of the categorical data type, we noted that imputing these columns with either the mean or median value would be appropriate.</p>
+<center><figure>
     <img
-        src="../images/count_plot_payer_code.png">
+        src="./images/count_plot_payer_code.png">
     <figcaption>
         <font size="+1"><em><center>
             Exhibit 1.0: Count Plot of Payer_Code
         </center></em></font>
-    </figcaption><br></p>
-</figure>
+    </figcaption>
+</figure></center>
 <p>The last step performed in pre-processing was calculating the percentage of missing values in our categorical columns. Exhibit 1.1 details our findings:</p>
+<br>
 <center><table border="1">
 <thead>
 <tr><th>Column Name</th><th>Percentage of Missing Values</th></tr>
@@ -14648,10 +14649,10 @@ Finally, to view the distributions of our categorical columns with missing value
 </table><br>
 <caption><font size="+1"><em>Exhibit 1.1: Percent Missing Values</em></caption></center>
 <h4 id="DATA-IMPUTATION:">DATA IMPUTATION:<a class="anchor-link" href="#DATA-IMPUTATION:">&#182;</a></h4><p>Upon reviewing our full data set and calculating the percentage of missing values that existed in our categorical columns, we proceeded to impute our missing values.</p>
-<p>All the missing values in our data set were denoted by: “?”. Since computers cannot impute data with special characters, we converted the question marks to “NaN”. Once this was complete, we re-calculated the sum of missing values in our columns to validate that no data loss had occurred in our conversion process.</p>
-<p>When we considered imputing the columns: “race”, “payer_code”, “medical_specialty,” “diag_1,” “diag_2” and “diag_3”, we tried two different approaches. One approach was imputing these columns with the mode of each column, and the second approach was leaving the columns as is with missing values. We fit our Logistic Regression model on both approaches and found that our performance results were negligible. Consequently, we decided to leave the columns with missing values, as we felt this represented our data the best.</p>
-<p>The first column we chose to impute was our “weight” column. Given that 96% of the data in our “weight” column were missing, we chose to drop the column from our data set.</p>
-<p>Next, we imputed the columns: “diabetesMed,” “change,” and “readmitted” with values of 0 and 1. This was done to simplify OHE as these columns had a maximum of three classes. Please note that although the column: “readmitted” contains three classes, we chose to convert it to a binary variable as we are only concerned with whether a patient has been readmitted or not. Exhibit 1.2 details our conversion process of these columns:</p>
+<p>All the missing values in our data set were denoted by: <code>?</code>. Since computers cannot impute data with special characters, we converted the question marks to “NaN”. Once this was complete, we re-calculated the sum of missing values in our columns to validate that no data loss had occurred in our conversion process.</p>
+<p>When we considered imputing the columns: <code>race</code>, <code>payer_code</code>, <code>medical_specialty</code>, <code>diag_1</code>, <code>diag_2</code>, and <code>diag_3</code>, we tried two different approaches. One approach was imputing these columns with the mode of each column, and the second approach was leaving the columns as is with missing values. We fit our Logistic Regression model on both approaches and found that our performance results were negligible. Consequently, we decided to leave the columns with missing values, as we felt this represented our data the best.</p>
+<p>The first column we chose to impute was our <code>weight</code> column. Given that 96% of the data in our <code>weight</code> column were missing, we chose to drop the column from our data set.</p>
+<p>Next, we imputed the columns: <code>diabetesMed</code>, <code>change</code>, and <code>readmitted</code> with values of 0 and 1. This was done to simplify OHE as these columns had a maximum of three classes. Please note that although the column: <code>readmitted</code> contains three classes, we chose to convert it to a binary variable as we are only concerned with whether a patient has been readmitted or not. Exhibit 1.2 details our conversion process of these columns:</p>
 <center><table>
   <tr>
     <th>Column Name</th>
@@ -14674,8 +14675,9 @@ Finally, to view the distributions of our categorical columns with missing value
     <td>0=No<br>1=Yes</td>
   </tr>
 </table><br>
-<caption><font size="+1"><em>Exhibit 1.2: Imputation process for the columns: “diabetesMed”, “change", and” readmitted”</em></caption></center>
+<caption><font size="+1"><em>Exhibit 1.2: Imputation process for the columns: "diabetesMed", “change", and” readmitted”</em></caption></center>
 <h4 id="RE-CODING-CATEGORICAL-COLUMNS:">RE-CODING CATEGORICAL COLUMNS:<a class="anchor-link" href="#RE-CODING-CATEGORICAL-COLUMNS:">&#182;</a></h4><p>When viewing the shape of our data set, we recognized that if we one hot encoded all 37 of our categorical variables, that our data set would be extremely wide. As a result, we decided to reduce the classes in each categorical variable by specifying a threshold for infrequent observations. Exhibit 1.3 details the thresholds that were chosen for each variable, as well as explanations as to why thresholds were chosen.</p>
+<br>
 <center><table border="1">
 <thead>
 <tr><th>Column Name</th><th>Selected Threshold</th><th>Explanation</th></tr>
@@ -14711,22 +14713,22 @@ Finally, to view the distributions of our categorical columns with missing value
 <li>Many of our numeric columns exhibited non-normal distributions.</li>
 <li>Our variables were not on the same scale.</li>
 </ol>
-<figure>
+<center><figure>
     <img
-        src="../images/encounter_id_density.png">
+        src="./images/encounter_id_density.png">
     <figcaption>
-      <font size="+1"><em>
+      <font size="+1">
             <em>Exhibit 1.4: Encounter ID Density Plot</em></font>
-    </figcaption><br>
-</figure>
-<figure>
+    </figcaption>
+</figure></center>
+<center><figure>
     <img
-        src="../images/admission_type_id_density.png">
+        src="./images/admission_type_id_density.png">
     <figcaption>
         <font size="+1"><em>
             Exhibit 1.5: Admission Type ID Density Plot</em></font>
-    </figcaption><br>
-</figure>
+    </figcaption>
+</figure></center>
 <p>After reviewing our histograms and pair plots, we assessed multicollinearity in our data by creating a correlation plot. Seeing that no columns had a correlation coefficient of 1.0, we chose not to remove any columns from our data set. At this point we were satisfied with our data and began evaluating if our data met our Logistic Regression modeling assumptions.</p>
 <h4 id="ASSUMPTIONS-OF-LOGISTIC-REGRESSION-MODELS:">ASSUMPTIONS OF LOGISTIC REGRESSION MODELS:<a class="anchor-link" href="#ASSUMPTIONS-OF-LOGISTIC-REGRESSION-MODELS:">&#182;</a></h4><p>The three key assumptions of Logistic Regression models include:</p>
 <ol>
@@ -14735,41 +14737,41 @@ Finally, to view the distributions of our categorical columns with missing value
 <li>Lack of outliers.</li>
 </ol>
 <p>To assess our first assumption, we created two log odds linear plots of our response variable versus the independent variables (Exhibit 1.6): “time_in_hospital” and “num_medications”</p>
-<figure>
+<center><figure>
     <img
-        src="../images/time_in_hosp_log_odds.png">
+        src="./images/time_in_hosp_log_odds.png">
     <figcaption>
-      <font size="+1"><em>
+      <font size="+1">
             <em>Exhibit 1.6: Log Odds for Time in Hospital</em></font>
-    </figcaption><br>
-</figure>
-<figure>
+    </figcaption>
+</figure></center>
+<center><figure>
     <img
-        src="../images/num_med_log_odds.png">
+        src="./images/num_med_log_odds.png">
     <figcaption>
         <font size="+1"><em>
             Exhibit 1.7: Log Odds for Num Meds Feature</em></font>
-    </figcaption><br>
-</figure>
-<figure>
+    </figcaption>
+</figure></center>
+<center><figure>
     <img
-        src="../images/orig_pair_plot.png"> 
+        src="./images/orig_pair_plot.png"> 
     <figcaption>
         <font size="+1"><em>
             Exhibit 1.8: Snapshot of several pair plots generated from our data</em></font>
-    </figcaption><br>
-</figure>
+    </figcaption>
+</figure></center>
 <p>Seeing that our log odds plots showed that our independent variables had a linear relationship to the log loss our response, we deemed that our first assumption was met.</p>
 <p>To address our multicollinearity assumption, we created a correlation plot. Given that no columns had a correlation coefficient of 1.0, we proceeded assuming that this assumption was met.</p>
 <p>The final assumption we addressed was lack of outliers. (Exhibit 1.8). As illustrated in our pair plots below, we did see that our data contained outliers. Given that the pair plots were built on un-scaled data, we proceeded in our analysis assuming that this assumption was met.</p>
-<figure>
+<center><figure>
     <img
-        src="../images/trans_log_reg_pair_plot.png"">
+        src="./images/trans_log_reg_pair_plot.png">
     <figcaption>
         <font size="+1"><em>
             Exhibit 1.9: Addressing our Logistic Regression outlier assumption with pair plots</em></font>
-    </figcaption><br>
-</figure>
+    </figcaption>
+</figure></center><br>
 <hr />
 <h1 id="3.-MODEL-BUILDING-&amp;-RESULTS">3. MODEL BUILDING &amp; RESULTS<a class="anchor-link" href="#3.-MODEL-BUILDING-&amp;-RESULTS">&#182;</a></h1><p>The use of Sklearn's <code>LogisticRegression</code> was used to model the data for this case study.</p>
 <p><em>Models use: 10-fold Cross validation (<code>Kfold</code>), <code>random_seed = 0</code>, and <code>max_iter = 50000</code>, and scoring metric of <code>F1</code></em></p>
@@ -14793,8 +14795,9 @@ HalvingSearchCV works by modeliong all potential candidates with less data and s
         &quot;tol&quot;:          0.001
 </code></pre>
 <p><strong>ElasticNetCV with GridSearchCV Tuned Parameters:</strong></p>
-<p>After performing <code>HalvingRandomSearchCV</code> to tune the model parameters, Sklearn's <code>cross_validate</code> was used to validate the model and determine final performance. The results of all 10 folds are below with a mean F1 score of .568746.</p>
-<center><table>
+<p>After performing <code>HalvingRandomSearchCV</code> to tune the model parameters, Sklearn's <code>cross_validate</code> was used to validate the model and determine final performance. The results of all 10 folds are below with a mean F1 score of .568746. Model results for the 10 fold Cross Validation are below in Exhibit 2.0.</p>
+<center>
+<table>
     <tr>
         <th></th>
         <th>fit_time</th>
@@ -14805,93 +14808,94 @@ HalvingSearchCV works by modeliong all potential candidates with less data and s
     </tr>
     <tr>
         <td>0</td>
-        <td>2.43238</td>
-        <td>0.00473499</td>
+        <td>2.79806</td>
+        <td>0.00683784</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.568733</td>
         <td>0.568562</td>
     </tr>
     <tr>
         <td>1</td>
-        <td>2.60263</td>
-        <td>0.00420213</td>
+        <td>3.08698</td>
+        <td>0.00623727</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.56834</td>
         <td>0.568627</td>
     </tr>
     <tr>
         <td>2</td>
-        <td>2.9399</td>
-        <td>0.00471711</td>
+        <td>3.93618</td>
+        <td>0.00589871</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.567456</td>
         <td>0.568824</td>
     </tr>
     <tr>
         <td>3</td>
-        <td>2.86625</td>
-        <td>0.00472498</td>
+        <td>3.40509</td>
+        <td>0.00616121</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.566277</td>
         <td>0.56902</td>
     </tr>
     <tr>
         <td>4</td>
-        <td>2.24447</td>
-        <td>0.00615811</td>
+        <td>2.62886</td>
+        <td>0.00576496</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.56726</td>
         <td>0.568922</td>
     </tr>
     <tr>
         <td>5</td>
-        <td>2.248</td>
-        <td>0.00481105</td>
+        <td>3.16587</td>
+        <td>0.00782394</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.572271</td>
         <td>0.568409</td>
     </tr>
     <tr>
         <td>6</td>
-        <td>2.93157</td>
-        <td>0.00560784</td>
+        <td>3.54918</td>
+        <td>0.00629807</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.574194</td>
         <td>0.567999</td>
     </tr>
     <tr>
         <td>7</td>
-        <td>2.92202</td>
-        <td>0.00460625</td>
+        <td>2.96987</td>
+        <td>0.00986385</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.573015</td>
         <td>0.568162</td>
     </tr>
     <tr>
         <td>8</td>
-        <td>2.47317</td>
-        <td>0.00449204</td>
+        <td>2.94131</td>
+        <td>0.0071609</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.561812</td>
         <td>0.56956</td>
     </tr>
     <tr>
         <td>9</td>
-        <td>2.8959</td>
-        <td>0.00579691</td>
+        <td>3.3788</td>
+        <td>0.00650287</td>
         <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
         <td>0.568101</td>
         <td>0.568796</td>
     </tr>
     <tr>
         <td>MEAN</td>
-        <td>2.65563</td>
-        <td>0.00498514</td>
+        <td>3.18602</td>
+        <td>0.00685496</td>
         <td></td>
         <td>0.568746</td>
         <td>0.568688</td>
     </tr>
-</table></center>
+</table>
+<caption><font size="+1"><em>Exhibit 2.0: 10 Fold Cross Validation Model Results</em></caption></center><br>
 <hr />
 <h1 id="4.-CONCLUSION">4. CONCLUSION<a class="anchor-link" href="#4.-CONCLUSION">&#182;</a></h1><p>In conclusion, after significant updates to thresholds and hyperparameters, we have determined that logistic regression does not properly model this data due to inablilty for the coefficient's to converge. Potential models that woudl be better for this data set would include decision trees or any sort of gradient boosting.</p>
 <hr />
