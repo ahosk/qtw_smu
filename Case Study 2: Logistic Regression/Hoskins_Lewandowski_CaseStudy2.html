@@ -14774,7 +14774,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </figure></center><br>
 <hr />
 <h1 id="3.-MODEL-BUILDING-&amp;-RESULTS">3. MODEL BUILDING &amp; RESULTS<a class="anchor-link" href="#3.-MODEL-BUILDING-&amp;-RESULTS">&#182;</a></h1><p>The use of Sklearn's <code>LogisticRegression</code> was used to model the data for this case study.</p>
-<p><em>Models use: 10-fold Cross validation (<code>Kfold</code>), <code>random_seed = 0</code>, and <code>max_iter = 50000</code>, and scoring metric of <code>F1</code></em></p>
+<p><em>Models use: 10-fold Cross validation (<code>Kfold</code>), <code>random_seed = 0</code>, and <code>max_iter = 50000</code>, and scoring metric of <code>Negative Mean Absolute Error</code></em></p>
 <p><strong>Model HalvingRandomSearchCV:</strong></p>
 <p>After preprocessing, EDA, and scaling the data, modeling was able to begin. To determine the best hyperparameters that we should use, we needed to iterate through several of <code>sklearn's</code> modules. We began with utilizing <code>GridSearchCV</code>, but due to the shape of our data and inability to scale our CPU, GPU, and Memory for the needs of this project, <code>GridSearchCV</code> was unable to complete and we needed to try other methods of tuning hyperparameters. With the use of Skelearn's <code>experimental</code> and <code>model_selection</code> packages we were able to utilize <code>HalvingRandomSearchCV</code> to obtain good, but potentially not the best hyperparameters for this model. <code>HalvingRandomSearchCV</code> combines the idea of <code>HalvingSearchCV</code> and <code>RandomizedSearchCV</code>.
 HalvingSearchCV works by modeliong all potential candidates with less data and selects half of the best performing models to add additional resources and data until a &quot;best&quot; model is output. <code>RandomizedSearchCV</code> randomly picks candidate modles from the grid to model.</p>
@@ -14787,19 +14787,19 @@ HalvingSearchCV works by modeliong all potential candidates with less data and s
         &quot;tol&quot;:          [1e-9,1e-8,1e-7,1e-6,1e-5, 1e-4, 1e-3, 1e-2, 1e-1]
 </code></pre>
 <p><strong>Best Model Output:</strong></p>
-<pre><code>        &quot;C&quot;:            100.0
-        &quot;l1_ratio&quot;:     0.8
+<pre><code>        &quot;C&quot;:            1.0
+        &quot;l1_ratio&quot;:     0.2
         &quot;n_jobs&quot;:       -1
         &quot;penalty&quot;:      'elasticnet'
         &quot;solver&quot;:       'saga'
-        &quot;tol&quot;:          0.001
+        &quot;tol&quot;:          1e-09
 </code></pre>
 <p><strong>ElasticNetCV with GridSearchCV Tuned Parameters:</strong></p>
-<p>After performing <code>HalvingRandomSearchCV</code> to tune the model parameters, Sklearn's <code>cross_validate</code> was used to validate the model and determine final performance. The results of all 10 folds are below with a mean F1 score of .568746. Model results for the 10 fold Cross Validation are below in Exhibit 2.0.</p>
+<p>After performing <code>HalvingRandomSearchCV</code> to tune the model parameters, Sklearn's <code>cross_validate</code> was used to validate the model and determine final performance. The results of all 10 folds are below with a MAE score of 0.431234. We modeled several different metrics, but determined that MAE was the best metric for determine the best model. Model results for the 10 fold Cross Validation are below in Exhibit 2.0.</p>
 <center>
 <table>
     <tr>
-        <th></th>
+        <th>CV Run</th>
         <th>fit_time</th>
         <th>score_time</th>
         <th>estimator</th>
@@ -14808,91 +14808,91 @@ HalvingSearchCV works by modeliong all potential candidates with less data and s
     </tr>
     <tr>
         <td>0</td>
-        <td>2.79806</td>
-        <td>0.00683784</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.568733</td>
-        <td>0.568562</td>
+        <td>25.5363</td>
+        <td>0.00609469</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.431463</td>
+        <td>-0.431449</td>
     </tr>
     <tr>
         <td>1</td>
-        <td>3.08698</td>
-        <td>0.00623727</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.56834</td>
-        <td>0.568627</td>
+        <td>24.9823</td>
+        <td>0.00657201</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.431561</td>
+        <td>-0.431384</td>
     </tr>
     <tr>
         <td>2</td>
-        <td>3.93618</td>
-        <td>0.00589871</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.567456</td>
-        <td>0.568824</td>
+        <td>25.6763</td>
+        <td>0.00533915</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.432544</td>
+        <td>-0.431187</td>
     </tr>
     <tr>
         <td>3</td>
-        <td>3.40509</td>
-        <td>0.00616121</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.566277</td>
-        <td>0.56902</td>
+        <td>25.1806</td>
+        <td>0.00650811</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.433821</td>
+        <td>-0.431002</td>
     </tr>
     <tr>
         <td>4</td>
-        <td>2.62886</td>
-        <td>0.00576496</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.56726</td>
-        <td>0.568922</td>
+        <td>25.3891</td>
+        <td>0.00669408</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.432642</td>
+        <td>-0.431231</td>
     </tr>
     <tr>
         <td>5</td>
-        <td>3.16587</td>
-        <td>0.00782394</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.572271</td>
-        <td>0.568409</td>
+        <td>25.3641</td>
+        <td>0.00693393</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.427729</td>
+        <td>-0.431613</td>
     </tr>
     <tr>
         <td>6</td>
-        <td>3.54918</td>
-        <td>0.00629807</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.574194</td>
-        <td>0.567999</td>
+        <td>25.4331</td>
+        <td>0.00782394</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.425806</td>
+        <td>-0.432023</td>
     </tr>
     <tr>
         <td>7</td>
-        <td>2.96987</td>
-        <td>0.00986385</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.573015</td>
-        <td>0.568162</td>
+        <td>19.1147</td>
+        <td>0.00559735</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.426985</td>
+        <td>-0.431848</td>
     </tr>
     <tr>
         <td>8</td>
-        <td>2.94131</td>
-        <td>0.0071609</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.561812</td>
-        <td>0.56956</td>
+        <td>25.2208</td>
+        <td>0.008039</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.437991</td>
+        <td>-0.430757</td>
     </tr>
     <tr>
         <td>9</td>
-        <td>3.3788</td>
-        <td>0.00650287</td>
-        <td>LogisticRegression(C=100.0, l1_ratio=0.8, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=0.001)</td>
-        <td>0.568101</td>
-        <td>0.568796</td>
+        <td>25.2794</td>
+        <td>0.006809</td>
+        <td>LogisticRegression(l1_ratio=0.2, n_jobs=-1, penalty='elasticnet',random_state=0, solver='saga', tol=1e-09)</td>
+        <td>-0.4318</td>
+        <td>-0.431226</td>
     </tr>
     <tr>
         <td>MEAN</td>
-        <td>3.18602</td>
-        <td>0.00685496</td>
+        <td>24.7177</td>
+        <td>0.00664113</td>
         <td></td>
-        <td>0.568746</td>
-        <td>0.568688</td>
+        <td>-0.431234</td>
+        <td>-0.431372</td>
     </tr>
 </table>
 <caption><font size="+1"><em>Exhibit 2.0: 10 Fold Cross Validation Model Results</em></caption></center><br>
